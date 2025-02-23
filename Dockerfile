@@ -1,18 +1,18 @@
-FROM node:18-alpine
+FROM node:20-alpine
 
 WORKDIR /app
 
-# Copy package files first
-COPY package.json pnpm-lock.yaml ./
+# Copy package files
+COPY package.json package-lock.json ./
 
-# Install pnpm
-RUN npm install -g pnpm
-
-# Clean install dependencies
-RUN pnpm install --frozen-lockfile
+# Install dependencies
+RUN npm ci
 
 # Copy the rest of the application
 COPY . .
 
+# Make sure we have the environment variables
+ENV NODE_ENV=production
+
 # Start the application
-CMD ["pnpm", "run", "start"]
+CMD ["npm", "run", "start"]
