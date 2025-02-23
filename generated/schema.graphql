@@ -1,0 +1,205 @@
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+scalar BigInt
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type Meta {
+  status: JSON
+}
+
+type Query {
+  users(id: String!): users
+  userss(where: usersFilter, orderBy: String, orderDirection: String, before: String, after: String, limit: Int): usersPage!
+  appeals(id: BigInt!): appeals
+  appealss(where: appealsFilter, orderBy: String, orderDirection: String, before: String, after: String, limit: Int): appealsPage!
+  votes(voterId: String!): votes
+  votess(where: votesFilter, orderBy: String, orderDirection: String, before: String, after: String, limit: Int): votesPage!
+  _meta: Meta
+}
+
+type users {
+  id: String!
+  proposalCount: Int
+  voteCount: Int
+  appeals(where: appealsFilter, orderBy: String, orderDirection: String, before: String, after: String, limit: Int): appealsPage
+  votes(where: votesFilter, orderBy: String, orderDirection: String, before: String, after: String, limit: Int): votesPage
+}
+
+type appealsPage {
+  items: [appeals!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type appeals {
+  id: BigInt!
+  appealerId: String!
+  uri: String
+  startTime: BigInt
+  endTime: BigInt
+  forScore: BigInt
+  againstScore: BigInt
+  executed: Boolean
+  proposer: users
+  votes(where: votesFilter, orderBy: String, orderDirection: String, before: String, after: String, limit: Int): votesPage
+}
+
+type votesPage {
+  items: [votes!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type votes {
+  appealId: BigInt!
+  voterId: String!
+  weight: BigInt
+  voter: users
+  proposal: appeals
+}
+
+input votesFilter {
+  AND: [votesFilter]
+  OR: [votesFilter]
+  appealId: BigInt
+  appealId_not: BigInt
+  appealId_in: [BigInt]
+  appealId_not_in: [BigInt]
+  appealId_gt: BigInt
+  appealId_lt: BigInt
+  appealId_gte: BigInt
+  appealId_lte: BigInt
+  voterId: String
+  voterId_not: String
+  voterId_in: [String]
+  voterId_not_in: [String]
+  voterId_contains: String
+  voterId_not_contains: String
+  voterId_starts_with: String
+  voterId_ends_with: String
+  voterId_not_starts_with: String
+  voterId_not_ends_with: String
+  weight: BigInt
+  weight_not: BigInt
+  weight_in: [BigInt]
+  weight_not_in: [BigInt]
+  weight_gt: BigInt
+  weight_lt: BigInt
+  weight_gte: BigInt
+  weight_lte: BigInt
+}
+
+input appealsFilter {
+  AND: [appealsFilter]
+  OR: [appealsFilter]
+  id: BigInt
+  id_not: BigInt
+  id_in: [BigInt]
+  id_not_in: [BigInt]
+  id_gt: BigInt
+  id_lt: BigInt
+  id_gte: BigInt
+  id_lte: BigInt
+  appealerId: String
+  appealerId_not: String
+  appealerId_in: [String]
+  appealerId_not_in: [String]
+  appealerId_contains: String
+  appealerId_not_contains: String
+  appealerId_starts_with: String
+  appealerId_ends_with: String
+  appealerId_not_starts_with: String
+  appealerId_not_ends_with: String
+  uri: String
+  uri_not: String
+  uri_in: [String]
+  uri_not_in: [String]
+  uri_contains: String
+  uri_not_contains: String
+  uri_starts_with: String
+  uri_ends_with: String
+  uri_not_starts_with: String
+  uri_not_ends_with: String
+  startTime: BigInt
+  startTime_not: BigInt
+  startTime_in: [BigInt]
+  startTime_not_in: [BigInt]
+  startTime_gt: BigInt
+  startTime_lt: BigInt
+  startTime_gte: BigInt
+  startTime_lte: BigInt
+  endTime: BigInt
+  endTime_not: BigInt
+  endTime_in: [BigInt]
+  endTime_not_in: [BigInt]
+  endTime_gt: BigInt
+  endTime_lt: BigInt
+  endTime_gte: BigInt
+  endTime_lte: BigInt
+  forScore: BigInt
+  forScore_not: BigInt
+  forScore_in: [BigInt]
+  forScore_not_in: [BigInt]
+  forScore_gt: BigInt
+  forScore_lt: BigInt
+  forScore_gte: BigInt
+  forScore_lte: BigInt
+  againstScore: BigInt
+  againstScore_not: BigInt
+  againstScore_in: [BigInt]
+  againstScore_not_in: [BigInt]
+  againstScore_gt: BigInt
+  againstScore_lt: BigInt
+  againstScore_gte: BigInt
+  againstScore_lte: BigInt
+  executed: Boolean
+  executed_not: Boolean
+  executed_in: [Boolean]
+  executed_not_in: [Boolean]
+}
+
+type usersPage {
+  items: [users!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+input usersFilter {
+  AND: [usersFilter]
+  OR: [usersFilter]
+  id: String
+  id_not: String
+  id_in: [String]
+  id_not_in: [String]
+  id_contains: String
+  id_not_contains: String
+  id_starts_with: String
+  id_ends_with: String
+  id_not_starts_with: String
+  id_not_ends_with: String
+  proposalCount: Int
+  proposalCount_not: Int
+  proposalCount_in: [Int]
+  proposalCount_not_in: [Int]
+  proposalCount_gt: Int
+  proposalCount_lt: Int
+  proposalCount_gte: Int
+  proposalCount_lte: Int
+  voteCount: Int
+  voteCount_not: Int
+  voteCount_in: [Int]
+  voteCount_not_in: [Int]
+  voteCount_gt: Int
+  voteCount_lt: Int
+  voteCount_gte: Int
+  voteCount_lte: Int
+}
