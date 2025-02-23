@@ -11,7 +11,8 @@ app.use('*', cors({
     'http://localhost:3000',
     'http://127.0.0.1:3000',
     'https://localhost:3000',
-    'https://127.0.0.1:3000'
+    'https://127.0.0.1:3000',
+    'https://kyrexx-darkard2003-darks-projects-dcee960a.vercel.app'
   ],
   allowMethods: ['GET', 'POST', 'OPTIONS'],
   allowHeaders: [
